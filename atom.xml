@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title type="text">Jason Zhang</title>
+    <subtitle type="html">MemE is a powerful and highly customizable GoHugo theme for personal blogs.</subtitle>
+    <updated>2021-02-08T19:26:50&#43;08:00</updated>
+    <id>https://example.com/</id>
+    <link rel="alternate" type="text/html" href="https://example.com/" />
+    <link rel="self" type="application/atom&#43;xml" href="https://example.com/atom.xml" />
+    <author>
+            <name>Jason Zhang</name>
+            <uri>https://example.com/</uri>
+            
+                <email>bestzed9595@gmail.com</email>
+            </author>
+    <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights>
+    <generator uri="https://gohugo.io/" version="0.79.0">Hugo</generator>
+        <entry>
+            <title type="text">关于Json的一些小事</title>
+            <link rel="alternate" type="text/html" href="https://example.com/posts/somthingaboutjson/" />
+            <id>https://example.com/posts/somthingaboutjson/</id>
+            <updated>2021-02-07T19:07:26&#43;08:00</updated>
+            <published>2021-02-07T19:04:38&#43;08:00</published>
+            <author>
+                    <name>Jason Zhang</name>
+                    <uri>https://example.com/</uri>
+                    <email>bestzed9595@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html"></summary>
+            
+                <content type="html"></content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">Elasticsearch 学习记录</title>
+            <link rel="alternate" type="text/html" href="https://example.com/posts/elasticsearch/" />
+            <id>https://example.com/posts/elasticsearch/</id>
+            <updated>2021-02-07T19:13:54&#43;08:00</updated>
+            <published>2021-02-07T18:54:38&#43;08:00</published>
+            <author>
+                    <name>Jason Zhang</name>
+                    <uri>https://example.com/</uri>
+                    <email>bestzed9595@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Elasticsearch的索引思路:
+ 将磁盘里的东西尽量搬进内存，减少磁盘随机读取次数(同时也利用磁盘顺序读特性)，结合各种奇技淫巧的压缩算法，用及其苛刻的态度使用内存。
+ 加速检索的设计有：
+对各个field建立倒排索引，建立posting list和term dictionary（加速对field的检索） 基于term dictionary block建立term index（基于公共前缀建立的树形结构），term index会被加载到内存中（FST压缩）。 对于posting list，使用roaring bitmap进行压缩。 对于多field联合查询，采用跳表和按位与的方法对多个posting list进行搜索。 所以，对于使用Elasticsearch进行索引时需要注意:
+不需要索引的字段，一定要明确定义出来，因为默认是自动建索引的 同样的道理，对于String类型的字段，不需要analysis的也需要明确定义出来，因为默认也是会analysis的 选择有规律的ID很重要，随机性太大的ID(比如java的UUID)不利于查询 关于最后一点，可能有多个因素:
+其中一个(也许不是最重要的)因素: 上面看到的压缩算法，都是对Posting list里的大量ID进行压缩的，那如果ID是顺序的，或者是有公共前缀等具有一定规律性的ID，压缩比会比较高；
+另外一个因素: 可能是最影响查询性能的，应该是最后通过Posting list里的ID到磁盘中查找Document信息的那步，因为Elasticsearch是分Segment存储的，根据ID这个大范围的Term定位到Segment的效率直接影响了最后查询的性能，如果ID是有规律的，可以快速跳过不包含该ID的Segment，从而减少不必要的磁盘读次数。</summary>
+            
+                <content type="html">&lt;p&gt;Elasticsearch的索引思路:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;将磁盘里的东西尽量搬进内存，减少磁盘随机读取次数(同时也利用磁盘顺序读特性)，结合各种奇技淫巧的压缩算法，用及其苛刻的态度使用内存。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;加速检索的设计有：&lt;/p&gt;
+&lt;p&gt;对各个field建立倒排索引，建立posting list和term dictionary（加速对field的检索）
+基于term dictionary block建立term index（基于公共前缀建立的树形结构），term index会被加载到内存中（FST压缩）。
+对于posting list，使用roaring bitmap进行压缩。
+对于多field联合查询，采用跳表和按位与的方法对多个posting list进行搜索。
+所以，对于使用Elasticsearch进行索引时需要注意:&lt;/p&gt;
+&lt;p&gt;不需要索引的字段，一定要明确定义出来，因为默认是自动建索引的
+同样的道理，对于String类型的字段，不需要analysis的也需要明确定义出来，因为默认也是会analysis的
+选择有规律的ID很重要，随机性太大的ID(比如java的UUID)不利于查询
+关于最后一点，可能有多个因素:&lt;/p&gt;
+&lt;p&gt;其中一个(也许不是最重要的)因素: 上面看到的压缩算法，都是对Posting list里的大量ID进行压缩的，那如果ID是顺序的，或者是有公共前缀等具有一定规律性的ID，压缩比会比较高；&lt;/p&gt;
+&lt;p&gt;另外一个因素: 可能是最影响查询性能的，应该是最后通过Posting list里的ID到磁盘中查找Document信息的那步，因为Elasticsearch是分Segment存储的，根据ID这个大范围的Term定位到Segment的效率直接影响了最后查询的性能，如果ID是有规律的，可以快速跳过不包含该ID的Segment，从而减少不必要的磁盘读次数。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">开始博客的一点小想法</title>
+            <link rel="alternate" type="text/html" href="https://example.com/posts/first/" />
+            <id>https://example.com/posts/first/</id>
+            <updated>2021-02-07T19:33:35&#43;08:00</updated>
+            <published>2021-02-07T15:26:54&#43;08:00</published>
+            <author>
+                    <name>Jason Zhang</name>
+                    <uri>https://example.com/</uri>
+                    <email>bestzed9595@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">形式是重要的，但是内容更重要。
+很多时候面对deadline的压力，先开始第一步总是解决焦虑的最好方式，你没有办法在一开始就做到完美。
+接受不完美的开始，比起犹豫不决，先快速开始第一步，然后不断地去学习和更新，才是更好的方式。
+毕其功于一役是很好的，可是生活中这样的事情太少，体验不断polish的工作和生活，也不失为一种浪漫。
+By 张醒言</summary>
+            
+                <content type="html">&lt;p&gt;形式是重要的，但是内容更重要。&lt;/p&gt;
+&lt;p&gt;很多时候面对deadline的压力，先开始第一步总是解决焦虑的最好方式，你没有办法在一开始就做到完美。&lt;/p&gt;
+&lt;p&gt;接受不完美的开始，比起犹豫不决，先快速开始第一步，然后不断地去学习和更新，才是更好的方式。&lt;/p&gt;
+&lt;p&gt;毕其功于一役是很好的，可是生活中这样的事情太少，体验不断polish的工作和生活，也不失为一种浪漫。&lt;/p&gt;
+&lt;p&gt;By 张醒言&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
+</feed>
